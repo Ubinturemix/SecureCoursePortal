@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Dashboard</h2>
+<p>Hello, <strong>{{ user.name }}</strong>. You are logged in as a <strong>{{ user.role }}</strong>.</p>
+
+<div style="display: flex; gap: 20px; flex-wrap: wrap; margin-top: 20px;">
+
+    <!-- Faculty Section -->
+    {% if user.role == 'Faculty' %}
+    <div style="flex: 1; min-width: 250px; border: 1px solid #ddd; padding: 15px; border-radius: 5px;">
+        <h3>Faculty Actions</h3>
+        <ul>
+            <li><a href="{{ url_for('upload_file') }}">Upload New File</a></li>
+            <li><a href="{{ url_for('list_files', file_type='submissions') }}">View Student Submissions</a></li>
+            <li><a href="{{ url_for('list_files', file_type='materials') }}">Manage Course Materials</a></li>
+            <li><a href="{{ url_for('list_files', file_type='assignments') }}">Manage Assignments</a></li>
+            <li><a href="{{ url_for('list_files', file_type='public') }}">Manage Public Resources</a></li>
+        </ul>
+    </div>
+    {% endif %}
+
+    <!-- Student Section -->
+    {% if user.role == 'Student' %}
+    <div style="flex: 1; min-width: 250px; border: 1px solid #ddd; padding: 15px; border-radius: 5px;">
+        <h3>Student Actions</h3>
+        <ul>
+            <li><a href="{{ url_for('list_files', file_type='materials') }}">View Course Materials</a></li>
+            <li><a href="{{ url_for('list_files', file_type='assignments') }}">View Assignments</a></li>
+            <li><a href="{{ url_for('upload_file') }}">Submit Assignment</a></li>
+        </ul>
+    </div>
+    {% endif %}
+
+    <!-- Public Section (Everyone) -->
+    <div style="flex: 1; min-width: 250px; border: 1px solid #ddd; padding: 15px; border-radius: 5px;">
+        <h3>Public Resources</h3>
+        <ul>
+            <li><a href="{{ url_for('list_files', file_type='public') }}">View Public Files</a></li>
+        </ul>
+    </div>
+
+</div>
+{% endblock %}
