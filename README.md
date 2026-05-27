@@ -9,6 +9,18 @@
 
 This is a small web portal I made to practice Role-Based Access Control (RBAC), secure file uploads, and Linux file permissions. It simulates a simple course site with different permissions for faculty, students, and guests.
 
+## Quick Start (2 Minutes)
+
+```bash
+cd "/Users/edgarperez/Downloads/PROJECTS/securecourse_perez"
+python3 -m venv .venv_demo
+.venv_demo/bin/python -m pip install --upgrade pip flask
+.venv_demo/bin/python -m unittest -v
+.venv_demo/bin/python app.py
+```
+
+Open: `http://127.0.0.1:5000`
+
 ## What This Project Does
 
 ### Role-Based Access
@@ -84,13 +96,42 @@ This script:
 ### 3. Run the App (Local / Dev)
 
 ```bash
-python3 app.py
+.venv_demo/bin/python app.py
 ```
 
 Then visit:
 `http://127.0.0.1:5000`
 
 
+
+## Verification Commands
+
+Run tests:
+
+```bash
+.venv_demo/bin/python -m unittest -v
+```
+
+Check app is reachable:
+
+```bash
+curl -I http://127.0.0.1:5000/login
+curl -I http://127.0.0.1:5000/
+```
+
+Expected:
+
+* `/login` returns `200`
+* `/` redirects (`302`) to `/login` when not authenticated
+
+## Demo Flow (5-10 Minutes)
+
+1. Login as `faculty1`, show dashboard, upload to `materials` or `assignments`.
+2. Open submissions list as faculty and explain faculty-only visibility.
+3. Logout and login as `student1`, show student can upload only to `submissions`.
+4. Attempt student access to `/files/submissions` and show access denied.
+5. Logout and login as `guest1`, show guest access is limited to public files.
+6. Close by explaining app-level RBAC + filesystem permissions as defense in depth.
 
 ## Apache Setup (Optional Production Deploy)
 
@@ -171,6 +212,33 @@ The sticky bit ensures student submissions stay protected even in a shared direc
 Even if the Flask app fails, the OS still enforces security.
 
 
+
+## Known Limitations and Next Steps
+
+Current limitations (intentional for a learning/demo project):
+
+* Mock user store in `users.py` instead of a real database
+* Demo credentials are plain text (not production-safe)
+* Flask development server is used for local demo only
+* Automated tests currently focus on core role access paths
+
+Planned improvements:
+
+* Move users/roles to a real DB and hash passwords (e.g., bcrypt/Argon2)
+* Move secrets/config to environment variables and secret management
+* Add negative/security tests (filename fuzzing, permission edge cases, file size checks)
+* Deploy with a production WSGI stack and add structured audit logging
+
+## Troubleshooting
+
+* GitHub push auth uses a Personal Access Token (PAT), not your GitHub password.
+* If push returns `403`, verify the authenticated account/token has write access to the target repo.
+* If `.DS_Store`/`__pycache__` show up locally, clean before demo:
+
+```bash
+git restore .DS_Store __pycache__/app.cpython-314.pyc
+rm -f uploads/.DS_Store
+```
 
 ## Demo Login Accounts
 
