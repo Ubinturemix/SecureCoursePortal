@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Login</h2>
+<form method="POST" action="{{ url_for('login') }}">
+    <div style="margin-bottom: 15px;">
+        <label for="username">Username:</label><br>
+        <input type="text" id="username" name="username" required style="width: 100%; padding: 8px; margin-top: 5px;">
+    </div>
+    <div style="margin-bottom: 15px;">
+        <label for="password">Password:</label><br>
+        <input type="password" id="password" name="password" required
+            style="width: 100%; padding: 8px; margin-top: 5px;">
+    </div>
+    <button type="submit" class="btn">Login</button>
+</form>
+
+<div style="margin-top: 20px; font-size: 0.9em; color: #666;">
+    <p><strong>Demo Credentials:</strong></p>
+    <ul>
+        <li>Faculty: faculty1 / password123</li>
+        <li>Student: student1 / password123</li>
+        <li>Guest: guest1 / password123</li>
+    </ul>
+</div>
+{% endblock %}
