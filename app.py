@@ -7,9 +7,13 @@ app = Flask(__name__)
 app.secret_key = 'super_secret_key_for_session_management' # Change this in production!
 
 # Configuration
+<<<<<<< HEAD
 # Use env override when provided; default to repo-local uploads for portability.
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 UPLOAD_FOLDER = os.environ.get('UPLOAD_FOLDER', os.path.join(BASE_DIR, 'uploads'))
+=======
+UPLOAD_FOLDER = '/Users/edgarperez/Desktop/securecourse/uploads'
+>>>>>>> origin/main
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'doc', 'docx', 'py', 'zip'}
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
